@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+  package.xml
+  ------------------------------------------------------------------------
+  ROS1 Noetic package manifest for the Status Reporting subsystem.
+  Author: Sarvar -- Slot #6, Group A Smart Warehouse Project
+-->
+<package format="2">
+
+    <name>status_reporting</name>
+    <version>1.0.0</version>
+    <description>
+        Status Reporting subsystem for the Smart Warehouse Coordination System.
+        Provides target tracking (Function 1) and unified mission log publishing
+        (Function 2). Aggregates fleet-wide state from perception, motion,
+        communication watchdog, and SLAM subsystems into a 1 Hz human-readable
+        mission log, persisted to disk for post-run analysis.
+    </description>
+
+    <maintainer email="sarvar@example.com">Sarvar</maintainer>
+    <license>MIT</license>
+
+    <!-- Build tool: catkin is the ROS1 Noetic standard. -->
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <!-- Runtime dependencies -- the message types our nodes publish/subscribe. -->
+    <exec_depend>rospy</exec_depend>
+    <exec_depend>std_msgs</exec_depend>
+    <exec_depend>geometry_msgs</exec_depend>
+    <exec_depend>rosbag</exec_depend>
+
+    <!-- Test dependencies -- pytest is used for unit-level scenarios. -->
+    <test_depend>python3-pytest</test_depend>
+
+    <export>
+    </export>
+
+</package>

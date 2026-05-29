@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--
+  status_reporting.launch
+  ------------------------------------------------------------------------
+  Brings up both Status Reporting nodes together. Designed to be either
+  launched standalone for testing OR included by the master warehouse
+  launch file alongside the SLAM, watchdog, and eco-router daemons.
+
+  Usage (standalone):
+      roslaunch status_reporting status_reporting.launch
+
+  Usage (from master launch):
+      <include file="$(find status_reporting)/launch/status_reporting.launch"/>
+-->
+<launch>
+
+    <!-- ============================================================== -->
+    <!-- Function 1: Target Tracker                                     -->
+    <!-- ============================================================== -->
+    <node name="target_tracker_node"
+          pkg="status_reporting"
+          type="target_tracker_node.py"
+          output="screen"
+          respawn="true">
+        <!-- respawn=true so a single crash does not kill the demo -->
+    </node>
+
+    <!-- ============================================================== -->
+    <!-- Function 2: Mission Log Publisher                              -->
+    <!-- ============================================================== -->
+    <node name="mission_log_publisher_node"
+          pkg="status_reporting"
+          type="mission_log_publisher_node.py"
+          output="screen"
+          respawn="true">
+    </node>
+
+    <!-- ============================================================== -->
+    <!-- Bag recording -- captures every relevant topic for replay.     -->
+    <!-- Saves to ~/.ros/status_reporting_<timestamp>.bag               -->
+    <!-- ============================================================== -->
+    <node name="status_bag_recorder"
+          pkg="rosbag"
+          type="record"
+          args="-o $(env HOME)/status_reporting
+                /scout/detections
+                /scout/tracked_target
+                /scout/target_count
+                /cmd_vel
+                /comm_status
+                /slam/confidence
+                /mission/log"
+          output="screen"/>
+
+</launch>
