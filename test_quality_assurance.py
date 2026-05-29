@@ -1,7 +1,7 @@
 """
 Quality Assurance - Pytest Unit Framework
 Smart Warehouse Autonomous Mobility System
-Author: Your Name
+Author: Nimatilaev Javokhir
 """
 
 import pytest
