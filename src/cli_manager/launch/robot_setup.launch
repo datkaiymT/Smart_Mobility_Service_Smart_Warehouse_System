@@ -1,0 +1,6 @@
+<launch>
+    <node pkg="cli_manager" type="robot_publisher.py" name="robot_publisher_node" output="screen" />
+
+    <node pkg="cli_manager" type="warehouse_cli.py" name="warehouse_cli_node" output="screen" />
+
+</launch>

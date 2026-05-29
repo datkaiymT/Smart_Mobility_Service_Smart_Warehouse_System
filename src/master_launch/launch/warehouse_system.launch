@@ -1,0 +1,24 @@
+<launch>
+
+    <!-- Mover Robot -->
+    <node
+        name="mover_controller"
+        pkg="smart_warehouse_system"
+        type="mover_controller.py"
+        output="screen" />
+
+    <!-- Scout Robot -->
+    <node
+        name="package_verification_node"
+        pkg="smart_warehouse_system"
+        type="package_verification_node.py"
+        output="screen" />
+
+    <!-- Coordinator Robot -->
+    <node
+        name="coordinator_node"
+        pkg="smart_warehouse_system"
+        type="coordinator_node.py"
+        output="screen" />
+
+</launch>

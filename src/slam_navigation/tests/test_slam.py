@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+"""
+test_slam_monitor.py
+--------------------
+Pytest unit tests for SLAM confidence computation logic.
+No ROS runtime required — tests pure math functions only.
+"""
+
+import pytest
+
+
+# ── Replicated confidence logic (pure function, no ROS dependency) ──
+
+def compute_confidence(cell_data: list) -> float:
+    """Ratio of known cells to total cells. Unknown = -1."""
+    total = len(cell_data)
+    if total == 0:
+        return 0.0
+    known = sum(1 for c in cell_data if c != -1)
+    return known / total
+
+
+def is_low_confidence(score: float, threshold: float = 0.3) -> bool:
+    return score < threshold
+
+
+# ── Tests ─────────────────────────────────────────────────────────────
+
+def test_empty_map_returns_zero():
+    """An empty map must return 0.0 confidence — no division by zero."""
+    assert compute_confidence([]) == 0.0
+
+
+def test_fully_unknown_map():
+    """All unknown cells (-1) must yield 0.0 confidence."""
+    data = [-1, -1, -1, -1, -1]
+    assert compute_confidence(data) == 0.0
+
+
+def test_fully_known_map():
+    """All known cells (mix of 0 and 100) must yield 1.0 confidence."""
+    data = [0, 0, 100, 100, 0]
+    assert compute_confidence(data) == 1.0
+
+
+def test_partial_map_confidence():
+    """Half known, half unknown must yield 0.5 confidence."""
+    data = [0, 100, -1, -1]
+    assert compute_confidence(data) == pytest.approx(0.5)
+
+
+def test_low_confidence_alert_fires():
+    """Score below threshold must trigger a low confidence alert."""
+    assert is_low_confidence(0.2, threshold=0.3) is True
+
+
+def test_confidence_alert_does_not_fire():
+    """Score above threshold must not trigger a low confidence alert."""
+    assert is_low_confidence(0.8, threshold=0.3) is False
+
+
+def test_confidence_at_exact_threshold():
+    """Score exactly equal to threshold is NOT considered low."""
+    assert is_low_confidence(0.3, threshold=0.3) is False

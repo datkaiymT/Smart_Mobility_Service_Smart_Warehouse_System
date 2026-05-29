@@ -1,0 +1,3 @@
+string robot_id
+float32 battery_level
+string current_task

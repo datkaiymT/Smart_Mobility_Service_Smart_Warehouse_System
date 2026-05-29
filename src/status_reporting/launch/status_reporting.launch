@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Target Tracker Node -->
+    <node name="target_tracker_node"
+          pkg="status_reporting"
+          type="target_tracker_node.py"
+          output="screen"
+          respawn="true">
+    </node>
+
+    <!-- Mission Log Publisher -->
+    <node name="mission_log_publisher_node"
+          pkg="status_reporting"
+          type="mission_log_publisher_node.py"
+          output="screen"
+          respawn="true">
+    </node>
+
+    <!-- Rosbag Recorder -->
+    <node name="status_bag_recorder"
+          pkg="rosbag"
+          type="record"
+          args="-o $(env HOME)/status_reporting
+                /scout/detections
+                /scout/tracked_target
+                /scout/target_count
+                /cmd_vel
+                /comm_status
+                /slam/confidence
+                /mission/log"
+          output="screen"/>
+
+</launch>
