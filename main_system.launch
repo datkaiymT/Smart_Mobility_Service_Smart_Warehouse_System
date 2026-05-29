@@ -1,0 +1,14 @@
+<launch>
+    <group ns="mover_robot">
+        <node pkg="smart_warehouse_coordination" type="navigation_logic.py" name="nav_logic" output="screen" />
+        <node pkg="smart_warehouse_coordination" type="motion_control.py" name="motion_ctrl" output="screen" />
+    </group>
+
+    <group ns="scout_robot">
+        <node pkg="smart_warehouse_coordination" type="perception_node.py" name="perception_mgr" output="screen" />
+    </group>
+
+    <group ns="coordinator_system">
+        <node pkg="smart_warehouse_coordination" type="coordinator_node.py" name="manager" output="screen" />
+    </group>
+</launch>
