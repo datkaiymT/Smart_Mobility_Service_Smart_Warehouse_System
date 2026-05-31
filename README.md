@@ -1,6 +1,6 @@
 # SLAM Navigation – Smart Warehouse Autonomous Mobility System
 
-Subtopic module for the Smart Warehouse project by **Datkaiym**.
+Subtopic module for the Smart Warehouse project by Group A.
 
 ## Overview
 
